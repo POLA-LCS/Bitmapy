@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+Bitmapy.egg-info/PKG-INFO
+Bitmapy.egg-info/SOURCES.txt
+Bitmapy.egg-info/dependency_links.txt
+Bitmapy.egg-info/requires.txt
+Bitmapy.egg-info/top_level.txt
+bitmapy/__init__.py
+bitmapy/bitmap.py
