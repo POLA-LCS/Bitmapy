@@ -101,7 +101,3 @@ class Bitmap:
                 r, g, b, a = img.getpixel((x, y))
                 bitmap.canvas[y][x] = (r, g, b, a)
         return bitmap
-
-# Ejemplo de uso
-bmp = Bitmap.from_image('path_to_image.png')
-bmp.save('output.bmp')
