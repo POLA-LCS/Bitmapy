@@ -1,6 +1,3 @@
-Color = tuple[int, int, int]
-Coord = tuple[int, int]
-
 class Pixel:
     def __init__(self, color: Color, position: Coord):
         self.color = color

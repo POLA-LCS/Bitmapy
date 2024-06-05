@@ -1,6 +1,6 @@
 import struct
 from PIL import Image
-from .pixel import *
+from .types import *
 
 class Bitmap:
     def __init__(self, width: int, height: int, default_color: Color | None = (255, 255, 255)):
@@ -44,9 +44,11 @@ class Bitmap:
 
     def draw_many(self, drawing: list[Pixel]):
         for pixel in drawing:
-            self.draw(pixel.color, pixel.coord)
+            self.draw(pixel[0], pixel[1])
 
     def save(self, path: str):
+        """Dumps the bitmap canvas into a file.\n
+        Recomendation: `<file>.bmp`"""
         file_header = b'BM'
         file_size = 14 + 40 + 4 * self.width * self.height
         reserved = 0
