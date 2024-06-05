@@ -3,15 +3,23 @@ from PIL import Image
 from .pixel import *
 
 class Bitmap:
-    def __init__(self, width: int, height: int):
+    def __init__(self, width: int, height: int, default_color: Color | None = (255, 255, 255)):
         self.width = width
         self.height = height
-        self.canvas = [[(255, 255, 255, 0)] * width for _ in range(height)]
+        self.default_color =  default_color
+        self.canvas = [[default_color] * width for _ in range(height)]
 
     def draw(self, color: Color, pos: Coord):
         x, y = pos
         if 1 <= x <= self.width and 1 <= y <= self.height:
             self.canvas[y-1][x-1] = color
+
+    def draw_cross(self, color: Color, pos: Coord, size: int):
+        self.draw(color, pos)
+        self.draw(color, (pos[0] + size, pos[1]))
+        self.draw(color, (pos[0] - size, pos[1]))
+        self.draw(color, (pos[0], pos[1] - size))
+        self.draw(color, (pos[0], pos[1] + size))
 
     def draw_col(self, color: Color, col: int):
         if 1 <= col <= self.width:
@@ -32,7 +40,7 @@ class Bitmap:
                     self.canvas[y-1][x-1] = color
 
     def erase(self, pos: Coord):
-        self.draw((255, 255, 255, 0), pos)
+        self.draw(self.default_color, pos)
 
     def draw_many(self, drawing: list[Pixel]):
         for pixel in drawing:
@@ -50,7 +58,7 @@ class Bitmap:
         idx = 0
         for row in reversed(self.canvas):
             for color in row:
-                image_data[idx:idx + 4] = struct.pack('BBBB', color[2], color[1], color[0], color[3])
+                image_data[idx:idx + 4] = struct.pack('BBBB', color[2], color[1], color[0], 255) # ALPHA 100%
                 idx += 4
                 
         with open(path, 'wb') as file:

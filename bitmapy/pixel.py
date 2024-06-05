@@ -1,4 +1,4 @@
-Color = tuple[int, int, int, int]
+Color = tuple[int, int, int]
 Coord = tuple[int, int]
 
 class Pixel:
@@ -17,10 +17,6 @@ class Pixel:
     @property
     def blue(self):
         return self.color[2]
-    
-    @property
-    def alpha(self):
-        return self.color[3]
         
     def __repr__(self) -> str:
         return f'({self.coord}, {self.color})'
@@ -31,8 +27,6 @@ class Pixel:
         if self.green > pixel.green:
             return True
         if self.blue > pixel.blue:
-            return True
-        if self.alpha > pixel.alpha:
             return True
         return False
         
