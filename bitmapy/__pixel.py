@@ -1,3 +1,6 @@
+"""__pixel.py:
+Future pixel class implementation for deep analisis, sorting and calculus"""
+
 class Pixel:
     def __init__(self, color: Color, position: Coord):
         self.color = color
