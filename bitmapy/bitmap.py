@@ -9,27 +9,12 @@ class Bitmap:
         self.default_color =  default_color
         self.canvas = [[default_color] * width for _ in range(height)]
 
-    def draw(self, color: Color, pos: Coord):
-        x, y = pos
-        if 1 <= x <= self.width and 1 <= y <= self.height:
-            self.canvas[y-1][x-1] = color
-
-    def draw_cross(self, color: Color, pos: Coord, size: int):
-        self.draw(color, pos)
-        self.draw(color, (pos[0] + size, pos[1]))
-        self.draw(color, (pos[0] - size, pos[1]))
-        self.draw(color, (pos[0], pos[1] - size))
-        self.draw(color, (pos[0], pos[1] + size))
-
-    def draw_col(self, color: Color, col: int):
-        if 1 <= col <= self.width:
-            for y in range(1, self.height + 1):
-                self.canvas[y-1][col-1] = color
-
-    def draw_row(self, color: Color, row: int):
-        if 1 <= row <= self.height:
-            for x in range(1, self.width + 1):
-                self.canvas[row-1][x-1] = color
+    def draw(self, *pixels: Pixel):
+        for pix in pixels:
+            color = pix[0]
+            x, y = pix[1]
+            if 1 <= x <= self.width and 1 <= y <= self.height:
+                self.canvas[y - 1][x - 1] = color
 
     def draw_area(self, color: Color, from_pos: Coord, to_pos: Coord):
         x1, y1 = from_pos
@@ -39,12 +24,16 @@ class Bitmap:
                 if 1 <= x <= self.width and 1 <= y <= self.height:
                     self.canvas[y-1][x-1] = color
 
-    def erase(self, pos: Coord):
-        self.draw(self.default_color, pos)
-
-    def draw_many(self, drawing: list[Pixel]):
-        for pixel in drawing:
-            self.draw(pixel[0], pixel[1])
+    def erase(self, *positions: Coord):
+        for pos in positions:
+            self.draw((self.default_color, pos))
+        
+    def draw_cross(self, color: Color, pos: Coord, size: int):
+        self.draw(color, pos)
+        self.draw(color, (pos[0] + size, pos[1]))
+        self.draw(color, (pos[0] - size, pos[1]))
+        self.draw(color, (pos[0], pos[1] - size))
+        self.draw(color, (pos[0], pos[1] + size))
 
     def save(self, path: str):
         """Dumps the bitmap canvas into a file.\n
