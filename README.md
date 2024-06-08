@@ -25,16 +25,18 @@ import Bitmap as bmp
 heart = bmp.Bitmap(7, 7, WHITE)
 
 # draw(color, (x, y))
-heart.draw(bmp.RED, (4, 3))
-heart.draw(bmp.RED, (3, 2))
-heart.draw(bmp.RED, (5, 2))
-heart.draw(bmp.RED, (2, 3))
-heart.draw(bmp.RED, (6, 3))
-heart.draw(bmp.RED, (2, 4))
-heart.draw(bmp.RED, (6, 4))
-heart.draw(bmp.RED, (5, 5))
-heart.draw(bmp.RED, (3, 5))
-heart.draw(bmp.RED, (4, 6))
+heart.draw(
+    (bmp.RED, (4, 3)),
+    (bmp.RED, (3, 2)),
+    (bmp.RED, (5, 2)),
+    (bmp.RED, (2, 3)),
+    (bmp.RED, (6, 3)),
+    (bmp.RED, (2, 4)),
+    (bmp.RED, (6, 4)),
+    (bmp.RED, (5, 5)),
+    (bmp.RED, (3, 5)),
+    (bmp.RED, (4, 6))
+)
 
 heart.save('heart.bmp')
 ```
@@ -51,10 +53,12 @@ spiral.draw_area(BLACK, (3, 3), (8, 8))
 spiral.draw_area(WHITE, (4, 4), (7, 7))
 spiral.draw_area(BLACK, (5, 5), (6, 6))
 
-spiral.draw(WHITE, (1, 2))
-spiral.draw(BLACK, (2, 3))
-spiral.draw(WHITE, (3, 4))
-spiral.draw(BLACK, (4, 5))
+spiral.draw(
+    (WHITE, (1, 2)),
+       (BLACK, (2, 3)),
+          (WHITE, (3, 4)),
+             (BLACK, (4, 5))
+)
 
 spiral.save('spiral.bmp')
 ```

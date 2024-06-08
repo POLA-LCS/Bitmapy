@@ -4,16 +4,13 @@ from .types import *
 
 class Bitmap:
     """## Bitmap\n
-    (documentation in process...)"""
+    documentation in process..."""
     def __init__(self, width: int, height: int, default_color: Color | None = (255, 255, 255)):
+        self.path = ''
         self.width = width
         self.height = height
         self.default_color =  default_color
-        self.__canvas = [[default_color] * width for _ in range(height)]
-
-    @property
-    def canvas(self):
-        return self.__canvas
+        self.canvas = [[default_color] * width for _ in range(height)]
 
     def draw(self, *pixels: Pixel):
         """Pixel format: `((r, g, b), (x, y))`"""
@@ -21,7 +18,7 @@ class Bitmap:
             color = pix[0]
             x, y = pix[1]
             if 1 <= x <= self.width and 1 <= y <= self.height:
-                self.__canvas[y - 1][x - 1] = color
+                self.canvas[y - 1][x - 1] = color
 
     def erase(self, *positions: Coord):
         """Draws in the `default_color` of the bitmap"""
@@ -35,7 +32,7 @@ class Bitmap:
         for y in range(min(y1, y2), max(y1, y2) + 1):
             for x in range(min(x1, x2), max(x1, x2) + 1):
                 if 1 <= x <= self.width and 1 <= y <= self.height:
-                    self.__canvas[y-1][x-1] = color
+                    self.canvas[y-1][x-1] = color
 
     def draw_cross(self, color: Color, pos: Coord, size: int):
         """Draws a pixel with four other pixels on the sides separated by `size`"""
@@ -45,7 +42,7 @@ class Bitmap:
         self.draw(color, (pos[0], pos[1] - size))
         self.draw(color, (pos[0], pos[1] + size))
 
-    def save(self, path: str):
+    def save(self, path: str | None):
         """Dumps the bitmap canvas into a file.\n
         Recomendation: `<file>.bmp`"""
         file_header = b'BM'
@@ -57,12 +54,12 @@ class Bitmap:
         
         image_data = bytearray(4 * self.width * self.height)
         idx = 0
-        for row in reversed(self.__canvas):
+        for row in reversed(self.canvas):
             for color in row:
                 image_data[idx:idx + 4] = struct.pack('BBBB', color[2], color[1], color[0], 255) # ALPHA 100%
                 idx += 4
                 
-        with open(path, 'wb') as file:
+        with open(path if path is not None else self.path, 'wb') as file:
             file.write(file_header)
             file.write(header_info)
             file.write(image_data)
@@ -95,6 +92,7 @@ def from_bitmap(bitmap_path: str) -> Bitmap:
 
     bitmap = Bitmap(width, height)
     bitmap.canvas = canvas
+    bitmap.path = bitmap_path
     return bitmap
 
 def from_image(image_path: str) -> Bitmap:
@@ -105,4 +103,5 @@ def from_image(image_path: str) -> Bitmap:
         for x in range(width):
             r, g, b, a = img.getpixel((x, y))
             bitmap.canvas[y][x] = (r, g, b, a)
+    bitmap.path = image_path
     return bitmap
