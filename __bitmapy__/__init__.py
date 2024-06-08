@@ -1,3 +1,4 @@
 from .bitmap import *
 from .colors import *
-from . import files
+from . import draw
+from . import get

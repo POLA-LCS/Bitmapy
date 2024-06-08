@@ -9,7 +9,7 @@ TOP-LEFT of the image.
 
 ## Your first RED pixel!
 ```python
-import Bitmapy as bmp
+from Bitmapy import bmp
 
 # Bitmap(width, height, default_color = WHITE)
 image = bmp.Bitmap(1, 1, (255, 0, 0))

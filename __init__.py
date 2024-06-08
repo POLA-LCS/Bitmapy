@@ -1,1 +1,1 @@
-from .bitmapy import *
+from .__bitmapy__ import *
