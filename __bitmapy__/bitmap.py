@@ -25,22 +25,26 @@ class Bitmap:
                 if 1 <= x <= self.width and 1 <= y <= self.height:
                     self.canvas[y - 1][x - 1] = color
 
-    def fill(self, color: Color, position: Coord):
+    def _colors_are_similar(self, color1: Color, color2: Color, tolerancy: int) -> bool:
+        return all(abs(a - b) <= tolerancy for a, b in zip(color1, color2))
+
+    def fill(self, color: Color, position: Coord, tolerancy: int = 0):
         x, y = position
-        if x < 0 or y < 0 or x >= self.width or y >= self.height:
+        if not (0 <= x < self.width and 0 <= y < self.height):
             return
-        drop_color = self.canvas[x][y]
-        print(drop_color)
-        if drop_color == color:
+        
+        target_color = self.canvas[y][x]
+        if target_color == color:
             return
+
         stack = [(x, y)]
         while stack:
-            x, y = stack.pop()
-            if x < 0 or y < 0 or x >= self.width or y >= self.height:
+            cx, cy = stack.pop()
+            if not (0 <= cx < self.width and 0 <= cy < self.height):
                 continue
-            if self.canvas[x][y] == drop_color:
-                self.canvas[x][y] = color
-                stack.extend([(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)])
+            if self._colors_are_similar(self.canvas[cy][cx], target_color, tolerancy):
+                self.canvas[cy][cx] = color
+                stack.extend([(cx - 1, cy), (cx + 1, cy), (cx, cy - 1), (cx, cy + 1)])
 
     def save(self, path: str):
         file_header = b'BM'
