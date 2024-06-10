@@ -1,1 +1,1 @@
-from .__bitmapy__ import *
+from .bmp import *
