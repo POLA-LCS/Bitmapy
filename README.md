@@ -1,5 +1,5 @@
 # Bitmapy
-![Bitmap logo.](/smiley_face.bmp)
+![Bitmap logo.](./logo.bmp)
 A work in progress bitmap manager with python.
 
 ## Details

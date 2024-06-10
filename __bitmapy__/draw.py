@@ -25,30 +25,30 @@ def circle(bmp: Bitmap, color: Color, position: Coord, radius: int):
         else:
             d = d + 4 * x + 6
             
-def bitmapy_logo(bmp: Bitmap):
-    bmp = Bitmap(10, 10, (0, 0, 0))
+def bitmapy_logo():
+    logo = Bitmap(13, 13, (255, 255, 255))
 
-    # Draw a yellow square from 2,2 to 9,9
-    bmp.draw_area((255, 255, 0), (2, 2), (9, 9))
+    circle(logo, (0, 0, 0), (7, 7), 6)
 
-    # Draw the white corners with cross
-    bmp.draw_cross((255, 255, 255), (1, 1), 1)
-    bmp.draw_cross((255, 255, 255), (1, 10), 1)
-    bmp.draw_cross((255, 255, 255), (10, 1), 1)
-    bmp.draw_cross((255, 255, 255), (10, 10), 1)
+    logo.fill((255, 255, 0), (7, 7))
 
-    bmp.draw(
-        # Four black pixels at the corners
-        ((0, 0, 0), (2, 2)),
-        ((0, 0, 0), (9, 9)),
-        ((0, 0, 0), (2, 9)),
-        ((0, 0, 0), (9, 2)),
+    logo.draw(
+        # Eyebrows
+        ((0, 0, 0), (4, 5)), # Left
+        ((0, 0, 0), (5, 5)),
+        ((0, 0, 0), (6, 5)),
+        ((0, 0, 0), (8, 5)), # Right
+        ((0, 0, 0), (9, 5)),
+        ((0, 0, 0), (10, 5)),
         # Eyes
-        ((0, 0, 0), (4, 4)),
-        ((0, 0, 0), (7, 4)),
+        ((0, 0, 0), (5, 7)), # Left
+        ((0, 0, 0), (9, 7)), # Right
         # Mouth
-        ((0, 0, 0), (7, 7)),
-        ((0, 0, 0), (4, 7)),
-        ((0, 0, 0), (5, 8)),
-        ((0, 0, 0), (6, 8)),
+        ((0, 0, 0), (5, 9)),
+        ((0, 0, 0), (9, 9)),
+        ((0, 0, 0), (6, 10)),
+        ((0, 0, 0), (7, 10)),
+        ((0, 0, 0), (8, 10)),
     )
+    
+    return logo

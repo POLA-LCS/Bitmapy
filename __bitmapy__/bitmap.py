@@ -8,6 +8,18 @@ class Bitmap:
         self.default_color = default_color
         self.canvas = [[default_color] * width for _ in range(height)]
 
+    @property
+    def center_x(self):
+        return self.width // 2
+    
+    @property
+    def center_y(self):
+        return self.height // 2
+    
+    @property
+    def center(self):
+        return (self.center_x, self.center_y)
+
     def draw(self, *pixels: Pixel):
         for color, (x, y) in pixels:
             if 1 <= x <= self.width and 1 <= y <= self.height:
