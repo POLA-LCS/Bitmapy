@@ -20,9 +20,9 @@ image.save('red_pixel.bmp')
 
 ## Draw a heart
 ```python
-import Bitmap as bmp
+import Bitmapy as bmp
 
-heart = bmp.Bitmap(7, 7, WHITE)
+heart = bmp.Bitmap(7, 7, bmp.WHITE)
 
 # draw(color, (x, y))
 heart.draw(
