@@ -58,6 +58,26 @@ class Bitmap:
                 self.canvas[cy][cx] = color
                 stack.extend([(cx - 1, cy), (cx + 1, cy), (cx, cy - 1), (cx, cy + 1)])
 
+    def scale(self, scale_factor: int) -> 'Bitmap':
+        """Scales the image by the scale_factor, not floating points allowed"""
+        if scale_factor <= 0:
+            raise ValueError("Scale factor must be a positive integer.")
+        
+        new_width = self.width * scale_factor
+        new_height = self.height * scale_factor
+        new_canvas = [[self.default_color] * new_width for _ in range(new_height)]
+
+        for y in range(self.height):
+            for x in range(self.width):
+                new_color = self.canvas[y][x]
+                for dy in range(scale_factor):
+                    for dx in range(scale_factor):
+                        new_canvas[y * scale_factor + dy][x * scale_factor + dx] = new_color
+
+        scaled_bitmap = Bitmap(new_width, new_height, self.default_color)
+        scaled_bitmap.canvas = new_canvas
+        return scaled_bitmap
+
     def save(self, path: str):
         file_header = b'BM'
         file_size = 14 + 40 + 4 * self.width * self.height
