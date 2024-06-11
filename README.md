@@ -1,5 +1,7 @@
-# ![Bitmap logo.](./logo.bmp) Bitmapy
+# Bitmapy
 *A work in progress bitmap manager with python.*
+
+![Bitmap logo.](./logo.bmp)
 
 ## Details
 - Like many other graphic design softwares, Bitmapy starts drawing from the
