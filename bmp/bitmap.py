@@ -98,7 +98,7 @@ class Bitmap:
                         new_canvas[y * scale_factor + dy][x * scale_factor + dx] = new_color
 
         scaled_bitmap = Bitmap(new_width, new_height, self.default_color)
-        scaled_bitmap.canvas = new_canvas
+        scaled_bitmap = new_canvas
         return scaled_bitmap
 
 
