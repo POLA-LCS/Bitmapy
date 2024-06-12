@@ -14,8 +14,7 @@ class Bitmap:
     
     @property
     def center_y(self):
-        return self.height // 2
-    
+        return self.height // 2    
     @property
     def center(self):
         return (self.center_x, self.center_y)
@@ -80,9 +79,9 @@ class Bitmap:
 
     def save(self, path: str):
         file_header = b'BM'
-        file_size = 14 + 40 + 4 * self.width * self.height
+        offset = 54 # 14 + 40
+        file_size = offset + 4 * self.width * self.height
         reserved = 0
-        offset = 14 + 40
         file_header += struct.pack('<IHHI', file_size, reserved, reserved, offset)
         
         header_info = struct.pack('<IIIHHIIIIII', 40, self.width, self.height, 1, 32, 0, 0, 0, 0, 0, 0)
