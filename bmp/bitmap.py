@@ -8,25 +8,11 @@ class Bitmap:
         self.default_color = default_color
         self.canvas = [[default_color] * width for _ in range(height)]
 
-    @property
-    def center_x(self):
-        return self.width // 2
-    
-    @property
-    def center_y(self):
-        return self.height // 2    
-    @property
-    def center(self):
-        return (self.center_x, self.center_y)
-
     def draw(self, *pixels: Pixel):
         for color, (x, y) in pixels:
             if 1 <= x <= self.width and 1 <= y <= self.height:
                 self.canvas[y - 1][x - 1] = color
 
-    def erase(self, *positions: Coord):
-        for pos in positions:
-            self.draw((self.default_color, pos))
     
     def draw_area(self, color: Color, start_pos: Coord, end_pos: Coord):
         start_x, start_y = start_pos
@@ -35,9 +21,10 @@ class Bitmap:
             for x in range(min(start_x, end_x), max(start_x, end_x) + 1):
                 if 1 <= x <= self.width and 1 <= y <= self.height:
                     self.canvas[y - 1][x - 1] = color
-
-    def _colors_are_similar(self, color1: Color, color2: Color, tolerancy: int) -> bool:
-        return all(abs(a - b) <= tolerancy for a, b in zip(color1, color2))
+                    
+    def erase(self, *positions: Coord):
+        for pos in positions:
+            self.draw((self.default_color, pos))
 
     def fill(self, color: Color, position: Coord, tolerancy: int = 0):
         x, y = position
@@ -53,7 +40,7 @@ class Bitmap:
             cx, cy = stack.pop()
             if not (0 <= cx < self.width and 0 <= cy < self.height):
                 continue
-            if self._colors_are_similar(self.canvas[cy][cx], target_color, tolerancy):
+            if all(abs(a - b) <= tolerancy for a, b in zip(self.canvas[cy][cx], target_color)):
                 self.canvas[cy][cx] = color
                 stack.extend([(cx - 1, cy), (cx + 1, cy), (cx, cy - 1), (cx, cy + 1)])
 
@@ -97,3 +84,23 @@ class Bitmap:
             file.write(file_header)
             file.write(header_info)
             file.write(image_data)
+
+    def draw_bitmap(self, bmp: 'Bitmap', from_pos: Coord):
+        dx, dy = from_pos
+        for y, row in enumerate(bmp.canvas):
+            for x, color in enumerate(row):
+                try:
+                    self.canvas[y + dy][x + dx] = color
+                except IndexError:
+                    pass
+                
+    def get_cut(self, from_pos: Coord, to_pos: Coord):
+        crop_canvas = [self.canvas[y][from_pos[1]:to_pos[1]] for y in range(from_pos[0], to_pos[0])]
+        crop_bitmap = Bitmap(
+            to_pos[1] - from_pos[1],
+            to_pos[0] - from_pos[0],
+            self.default_color
+        )
+        crop_bitmap.canvas = crop_canvas
+        return crop_bitmap        
+        
