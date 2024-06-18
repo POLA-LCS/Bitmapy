@@ -142,7 +142,7 @@ class Bitmap:
     def size(self):
         return self.width, self.height
 
-    def __repr__(self) -> str:
+    def get_str(self) -> str:
         lines = ''
         for row in self.canvas:
             for p, pixel in enumerate(row):
