@@ -1,14 +1,29 @@
 import struct
 from .types import Color, Pixel, Area, Coord
 
+def parse_coord(coord: Coord) -> Coord:
+    if len(coord) == 1:
+        return (coord[0], coord[0])
+    elif len(coord) == 2:
+        return coord
+    else:
+        raise ValueError("Invalid coordinate format")
+
 class Bitmap:
-    def __init__(self, width: int, height: int, default_color: Color = (255, 255, 255)):
+    def __init__(self, width: int, height: int, default_color: Color = (255, 255, 255), path: str | None = None):
         self.__width = width
         self.__height = height
         self.default_color = default_color
         self.canvas = [[default_color] * width for _ in range(height)]
+        self.path = path
+    
+    def save(self, path: str | None = None):
+        if path is None:
+            if self.path is None:
+                raise ValueError("Path is not specified")
             
-    def save(self, path: str):
+        path = self.path
+        
         file_header = b'BM'
         offset = 54  # 14 (file header) + 40 (info header)
         file_size = offset + 4 * self.__width * self.__height
@@ -66,13 +81,15 @@ class Bitmap:
                 stack.extend([(cleft - 1, ctop), (cleft + 1, ctop), (cleft, ctop - 1), (cleft, ctop + 1)])
                 
     def draw_pixel(self, color: Color, position: Coord):
-        left, top = position
+        left, top = parse_coord(position)
+        if len(color) == 3:
+            color = (*color, 255)
         if 1 <= left <= self.__width and 1 <= top <= self.__height:
             self.canvas[top - 1][left - 1] = color
                 
     def draw_area(self, color: Color, start: Coord, end: Coord):
-        start_left, start_top = start
-        end_left, end_top = end
+        start_left, start_top = parse_coord(start)
+        end_left, end_top = parse_coord(end)
         for top in range(min(start_top, end_top), max(start_top, end_top) + 1):
             for x in range(min(start_left, end_left), max(start_left, end_left) + 1):
                 self.draw_pixel(color, (top, x))
@@ -83,12 +100,13 @@ class Bitmap:
     def erase_area(self, start: Coord, end: Coord):
         self.draw_area((0, 0, 0, 0), start, end)
 
-    def draw_bitmap(self, bmp: 'Bitmap', from_pos: Coord):
-        dleft, dtop = from_pos
+    def blit(self, bmp: 'Bitmap', from_pos: Coord):
+        dleft, dtop = parse_coord(from_pos)
         for top, row in enumerate(bmp.canvas):
             for left, color in enumerate(row):
                 try:
-                    self.canvas[top + dtop][left + dleft] = color
+                    if color[-1] != 0:
+                        self.canvas[dtop + top][dleft + left] = color
                 except IndexError:
                     pass
 
@@ -152,3 +170,17 @@ class Bitmap:
                     lines += ' '
             lines += '\n'
         return lines[:-1]
+    
+    def __enter__(self):
+        if self.path is None:
+            ValueError('Path is required for context manager') 
+        return self
+    
+    def __exit__(self, a, b, c):
+        if a:
+            print(a)
+        if b:
+            print(b)
+        if c:
+            print(c)
+        self.save(self.path)

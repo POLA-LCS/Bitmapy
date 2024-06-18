@@ -24,7 +24,7 @@ def from_bitmap(bitmap_path: str) -> Bitmap:
         for x in range(width):
             idx = (y * width + x) * 4
             b, g, r, a = struct.unpack('BBBB', image_data[idx:idx + 4])
-            row.append((r, g, b))
+            row.append((r, g, b, a))
         canvas.insert(0, row)
 
     bitmap = Bitmap(width, height)
@@ -38,5 +38,5 @@ def from_image(image_path: str) -> Bitmap:
     for y in range(height):
         for x in range(width):
             r, g, b, a = img.getpixel((x, y))
-            bitmap.canvas[y][x] = (r, g, b)
+            bitmap.canvas[y][x] = (r, g, b, a)
     return bitmap

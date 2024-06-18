@@ -1,8 +1,5 @@
-from .bitmap import *
+from .bitmap import Bitmap
 from .colors import *
+from . import types
 from . import draw
 from . import get
-from . import font
-
-AUTHOR = 'Baltazar Zara Pilling'
-VERSION = '1.7'
