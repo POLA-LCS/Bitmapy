@@ -2,7 +2,6 @@ from .types import Color
 
 BLACK: Color = (0, 0, 0)
 GREY:  Color = (127, 127, 127)
-GRAY:  Color = GREY
 WHITE: Color = (255, 255, 255)
 
 RED:   Color = (255, 0, 0)
@@ -22,7 +21,8 @@ LIGHT_BLUE = (63, 63, 255)
 SKY_BLUE = (63, 63, 200)
 
 LIGHT_GREY: Color = (190, 190, 190)
-LIGHT_GRAY: Color = LIGHT_GREY
-
 DARK_GREY: Color = (67, 67, 67)
-DARK_GRAY: Color = DARK_GREY
+
+GRAY:       Color = GREY
+LIGHT_GRAY: Color = LIGHT_GREY
+DARK_GRAY:  Color = DARK_GREY

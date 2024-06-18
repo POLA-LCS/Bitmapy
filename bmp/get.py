@@ -40,16 +40,3 @@ def from_image(image_path: str) -> Bitmap:
             r, g, b, a = img.getpixel((x, y))
             bitmap.canvas[y][x] = (r, g, b)
     return bitmap
-
-def bitmap_raw_data(bitmap: Bitmap, output_path: str):
-    with open(output_path, 'a') as file:
-        lines = []
-        for row in bitmap.canvas:
-            line = ''
-            for pixel in row:
-                for i, data in enumerate(pixel):
-                    line += f'{hex(data)[2:]}'
-                if i < 4:
-                    line += ' '
-                lines.append(line)
-        file.writelines(lines)
