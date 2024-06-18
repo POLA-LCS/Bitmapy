@@ -1,5 +1,5 @@
-from ..bmp.get import from_bitmap
-from ..bmp.bitmap import Bitmap
+from ..get import from_bitmap
+from ..bitmap import Bitmap
 from pathlib import Path
 import os
 
