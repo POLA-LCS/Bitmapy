@@ -44,12 +44,13 @@ Bitmapy supports an unlimited set of fonts, those are just bitmaps that are link
 
 The special symbols are those who can't have a direct file-name relationship like "(" that it's linked with "(.bmp".
 This symbols has their own file name:
--  : space
-- ?: close
-- ¿: open
-- ': single
-- ": double
-- *: star
+-   : space
+- : : colon
+- ? : close
+- ¿ : open
+- ' : single
+- " : double
+- * : star
 - < : less
 - \> : greater
 - / : slash
@@ -72,5 +73,11 @@ example_font\
 │   ├── 1.bmp
 │   └── ...
 └── symbol\
-    ├── !.bmp
-    └── double.bmp
+    ├── #.bmp
+    ├── open.bmp
+    ├── @.bmp
+    ├── double.bmp
+    └── ...
+
+## Personalized structure
+[!] Work in progress...
