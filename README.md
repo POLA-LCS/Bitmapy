@@ -58,7 +58,8 @@ This symbols has their own file name:
 - | : pipe
 
 ## Font structure
-The folder structure of the font is very important, without the next structure, the code will not import your font
+The folder structure of the font is very important, without the next structure, the code will not import your font.
+
 example_font\
 ├── lower\
 │   ├── a.bmp\
@@ -80,4 +81,4 @@ example_font\
     └── ...\
 
 ## Personalized structure
-[!] Work in progress...
+WORK IN PROGRESS...
