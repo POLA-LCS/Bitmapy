@@ -12,12 +12,13 @@ SPECIAL_SYMBOLS = {
     'open': '¿',
     'single': "'",
     'double': '"',
-    'start': '*',
+    'star': '*',
     'less': '<',
     'greater': '>',
     'backslash': '\\',
     'slash': '/',
-    'pipe': '|'
+    'pipe': '|',
+    'colon': ':'
 }
 
 class Font:
@@ -65,7 +66,7 @@ class Font:
             try:
                 self.symbol[SPECIAL_SYMBOLS[reference]] = from_bitmap(os.path.join(symbol_path, f'{reference}.bmp'))
             except FileNotFoundError as e:
-                self.__not_found
+                self.__not_found.append(e.filename)
         
     def get_text(self, text: str):
         return [self.get_letter(letter) for letter in text]

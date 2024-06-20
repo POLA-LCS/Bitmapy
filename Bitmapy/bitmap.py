@@ -21,8 +21,7 @@ class Bitmap:
         if path is None:
             if self.path is None:
                 raise ValueError("Path is not specified")
-            
-        path = self.path
+            path = self.path
         
         file_header = b'BM'
         offset = 54  # 14 (file header) + 40 (info header)
@@ -91,8 +90,8 @@ class Bitmap:
         start_left, start_top = parse_coord(start)
         end_left, end_top = parse_coord(end)
         for top in range(min(start_top, end_top), max(start_top, end_top) + 1):
-            for x in range(min(start_left, end_left), max(start_left, end_left) + 1):
-                self.draw_pixel(color, (top, x))
+            for left in range(min(start_left, end_left), max(start_left, end_left) + 1):
+                self.draw_pixel(color, (left, top))
 
     def erase_pixel(self, position: Coord):
         self.draw_pixel((0, 0, 0, 0), position)
@@ -184,3 +183,8 @@ class Bitmap:
         if c:
             print(c)
         self.save(self.path)
+        
+    def __repr__(self) -> str:
+        if self.path:
+            return f'BMP({self.size}, {self.path})'
+        return f'BMP({self.size})'
