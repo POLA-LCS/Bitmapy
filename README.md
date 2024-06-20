@@ -59,11 +59,11 @@ This symbols has their own file name:
 
 ## Font structure
 The folder structure of the font is very important, without the next structure, the code will not import your font
-example_font
-├── lower
-│   ├── a.bmp
-│   ├── b.bmp
-│   └── ...
+example_font\
+├── lower\
+│   ├── a.bmp\
+│   ├── b.bmp\
+│   └── ...\
 ├── upper
 │   ├── a.bmp
 │   ├── b.bmp
