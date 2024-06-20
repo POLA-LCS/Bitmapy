@@ -64,20 +64,20 @@ example_font\
 │   ├── a.bmp\
 │   ├── b.bmp\
 │   └── ...\
-├── upper
-│   ├── a.bmp
-│   ├── b.bmp
-│   └── ...
-├── digit
-│   ├── 0.bmp
-│   ├── 1.bmp
-│   └── ...
-└── symbol
-    ├── #.bmp
-    ├── open.bmp
-    ├── @.bmp
-    ├── double.bmp
-    └── ...
+├── upper\
+│   ├── a.bmp\
+│   ├── b.bmp\
+│   └── ...\
+├── digit\
+│   ├── 0.bmp\
+│   ├── 1.bmp\
+│   └── ...\
+└── symbol\
+    ├── #.bmp\
+    ├── open.bmp\
+    ├── @.bmp\
+    ├── double.bmp\
+    └── ...\
 
 ## Personalized structure
 [!] Work in progress...
