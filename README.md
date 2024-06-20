@@ -1,7 +1,7 @@
 # Bitmapy
 *A work in progress bitmap manager with python.*
 
-## Today in version 1.7.3 !!!
+## Today in version beta 1.12.3 !!!
 
 ![Bitmap logo.](./logo.bmp)
 
