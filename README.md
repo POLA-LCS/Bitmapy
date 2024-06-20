@@ -59,20 +59,20 @@ This symbols has their own file name:
 
 ## Font structure
 The folder structure of the font is very important, without the next structure, the code will not import your font
-example_font\
-├── lower\
+example_font
+├── lower
 │   ├── a.bmp
 │   ├── b.bmp
 │   └── ...
-├── upper\
+├── upper
 │   ├── a.bmp
 │   ├── b.bmp
 │   └── ...
-├── digit\
+├── digit
 │   ├── 0.bmp
 │   ├── 1.bmp
 │   └── ...
-└── symbol\
+└── symbol
     ├── #.bmp
     ├── open.bmp
     ├── @.bmp
