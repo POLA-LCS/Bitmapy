@@ -1,4 +1,4 @@
 from .bitmap import Bitmap
 from .colors import *
-from . import fonts
-from . import types, draw, get
+from .types import parse_coord
+from . import fonts, types, draw, get

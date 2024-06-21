@@ -1,13 +1,13 @@
 # Bitmapy
-*A work in progress bitmap manager with python.*
+*The Python's bitmap manager.*
 
-## Today in version 1.7.3 !!!
+## Currently in beta 1.12.5 !!!
 
 ![Bitmap logo.](./logo.bmp)
 
 ### Details
 - Like many other graphic design softwares, Bitmapy starts drawing from the
-TOP-LEFT of the image.
+TOP LEFT of the image.
 - It is a WIP project so it's liable to bugs or non-wanted behavior.
 
 ### Your first RED pixel

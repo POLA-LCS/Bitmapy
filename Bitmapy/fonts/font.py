@@ -1,25 +1,8 @@
 from ..get import from_bitmap
 from ..bitmap import Bitmap
 from pathlib import Path
+from .characters import *
 import os
-
-LETTERS = 'abcçdefghijklmnñopqrstuvwxyz'
-DIGITS = '0123456789'
-SYMBOLS = list('()[]{}¡!-+=.,;_%$€ºª@#&·~¬^´¨`')
-SPECIAL_SYMBOLS = {
-    'space': ' ',
-    'close': '?',
-    'open': '¿',
-    'single': "'",
-    'double': '"',
-    'star': '*',
-    'less': '<',
-    'greater': '>',
-    'backslash': '\\',
-    'slash': '/',
-    'pipe': '|',
-    'colon': ':'
-}
 
 class Font:
     def __init__(self, name: str, path: str):

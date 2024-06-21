@@ -1,28 +1,58 @@
 from .types import Color
 
-BLACK: Color = (0, 0, 0)
-GREY:  Color = (127, 127, 127)
-WHITE: Color = (255, 255, 255)
+def parse_color(color: Color) -> Color:
+    if len(color) == 3:
+        color = (*color, 255)
+    if len(color) != 4 or not all([data >= 0 and data <= 255 for data in color]):
+        raise ValueError(f"Invalid color format: {color}. Color should be a tuple of 3 or 4 integers")
+    return color
 
-RED:   Color = (255, 0, 0)
-LIME:  Color = (0, 255, 0)
-BLUE:  Color = (0, 0, 255)
+def blend_color(color_a: Color, color_b: Color) -> Color:
+    r1, g1, b1, a_alpha = parse_color(color_a)
+    r2, g2, b2, b_alpha = parse_color(color_b)
 
-GREEN: Color = (0, 127, 0)
+    a_alpha /= 255
+    b_alpha /= 255
 
-YELLOW: Color = (255, 255, 0)
-PURPLE: Color = (255, 0, 255)
-CYAN:   Color = (0, 255, 255)
+    r = round((r1 * a_alpha) + (r2 * b_alpha))
+    g = round((g1 * a_alpha) + (g2 * b_alpha))
+    b = round((b1 * a_alpha) + (b2 * b_alpha))
 
-ORANGE: Color = (255, 127, 0)
-PINK:   Color = (255, 190, 203)
+    a = round((a_alpha + b_alpha * (1 - a_alpha)) * 255)
 
-LIGHT_BLUE = (63, 63, 255)
-SKY_BLUE = (63, 63, 200)
+    r = max(0, min(255, r))
+    g = max(0, min(255, g))
+    b = max(0, min(255, b))
+    a = max(0, min(255, a))
 
-LIGHT_GREY: Color = (190, 190, 190)
-DARK_GREY: Color = (67, 67, 67)
+    return (r, g, b, a)
 
-GRAY:       Color = GREY
-LIGHT_GRAY: Color = LIGHT_GREY
-DARK_GRAY:  Color = DARK_GREY
+MAX = 255
+HALF = 127
+MIN = 0
+
+EMPTY = (MIN, MIN, MIN, MIN)
+
+BLACK = (MIN, MIN, MIN)
+GRAY = GREY = (HALF, HALF, HALF)
+WHITE = (MAX, MAX, MAX)
+
+RED  = (MAX, MIN, MIN)
+LIME = (MIN, MAX, MIN)
+BLUE = (MIN, MIN, MAX)
+
+GREEN = (MIN, HALF, MIN)
+
+YELLOW = (MAX, MAX, MIN)
+PURPLE = (MAX, MIN, MAX)
+CYAN   = (MIN, MAX, MAX)
+
+ORANGE = (MAX, HALF, MIN)
+PINK   = (MAX, 190, 203)
+
+LIGHT_BLUE = (63, 63, MAX)
+SKY_BLUE   = (63, 63, 200)
+
+LIGHT_GRAY = LIGHT_GREY = (190, 190, 190)
+DARK_GRAY = DARK_GREY  = (67, 67, 67)
+

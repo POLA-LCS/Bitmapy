@@ -1,1 +1,3 @@
-from .font import Font, LETTERS, DIGITS, SYMBOLS, SPECIAL_SYMBOLS
+from .font import Font
+from .characters import *
+DEFAULT_FONT_PATH = '.\\Bitmapy\\Bitmapy\\fonts\\default'
