@@ -6,7 +6,7 @@ def circle(bmp: Bitmap, color: Color, position: Coord, radius: int):
     y = radius
     d = 3 - 2 * radius
 
-    def draw_circle_points(bmp, center_x, center_y, x, y, color):
+    def draw_circle_points(bmp: Bitmap, center_x, center_y, x, y, color):
         points = [
             (center_x + x, center_y + y), (center_x - x, center_y + y),
             (center_x + x, center_y - y), (center_x - x, center_y - y),

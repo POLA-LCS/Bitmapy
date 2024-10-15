@@ -82,15 +82,15 @@ class Bitmap:
         if target_color == color:
             return
 
-        stack = [(left, top)]
-        while stack:
-            cleft, ctop = stack.pop()
+        queue = [(left, top)]
+        while queue:
+            cleft, ctop = queue.pop(0)
             if not (0 <= cleft < self.__width and 0 <= ctop < self.__height):
                 continue
             actual_color = self.canvas[ctop][cleft]
-            if all(abs(a - b) <= tolerancy for a, b in zip(actual_color, target_color)):
+            if all(abs(a - t) <= tolerancy for a, t in zip(actual_color, target_color)):
                 self.canvas[ctop][cleft] = color
-                stack.extend([(cleft-1, ctop), (cleft+1, ctop), (cleft, ctop-1), (cleft, ctop+1)])
+                queue.extend([(cleft - 1, ctop), (cleft + 1, ctop), (cleft, ctop - 1), (cleft, ctop + 1)])
 
     def draw_pixel(self, color: Color, position: Coord):
         """Draws a `color` pixel on the specified `position`"""
