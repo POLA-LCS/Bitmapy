@@ -7,25 +7,18 @@ def parse_color(color: Color) -> Color:
         raise ValueError(f"Invalid color format: {color}. Color should be a tuple of 3 or 4 integers")
     return color
 
-def blend_color(color_a: Color, color_b: Color) -> Color:
-    r1, g1, b1, a_alpha = parse_color(color_a)
-    r2, g2, b2, b_alpha = parse_color(color_b)
+def blend_color(destination: Color, source: Color) -> Color:
+    dest_red, dest_green, dest_blue, dest_alpha = parse_color(destination)
+    src_red, src_green, src_blue, src_alpha = parse_color(source)
 
-    a_alpha /= 255
-    b_alpha /= 255
-
-    r = round((r1 * a_alpha) + (r2 * b_alpha))
-    g = round((g1 * a_alpha) + (g2 * b_alpha))
-    b = round((b1 * a_alpha) + (b2 * b_alpha))
-
-    a = round((a_alpha + b_alpha * (1 - a_alpha)) * 255)
-
-    r = max(0, min(255, r))
-    g = max(0, min(255, g))
-    b = max(0, min(255, b))
-    a = max(0, min(255, a))
-
-    return (r, g, b, a)
+    src_alpha /= 255
+    dest_alpha /= 255
+    
+    red   = src_red * src_alpha + dest_red * (1 - src_alpha)
+    green = src_green * src_alpha + dest_green * (1 - src_alpha)
+    blue  = src_blue * src_alpha + dest_blue * (1 - src_alpha)
+    alpha = src_alpha + dest_alpha * (1 - src_alpha)
+    return (round(red), round(green), round(blue), round(alpha * 255))
 
 MAX = 255
 HALF = 127

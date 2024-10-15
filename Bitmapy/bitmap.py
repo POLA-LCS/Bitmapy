@@ -97,8 +97,9 @@ class Bitmap:
         left, top = parse_coord(position)
         color = parse_color(color)
         if 0 <= left < self.__width and 0 <= top < self.__height:
-            target = self.canvas[top][left]
-            self.canvas[top][left] = blend_color(target, color)
+            if color[-1] != 0:
+                target = self.canvas[top][left]
+                self.canvas[top][left] = blend_color(target, color)
 
     def erase_pixel(self, position: Coord):
         """Turns the pixel in the `position` into a transparent pixel"""
@@ -118,7 +119,7 @@ class Bitmap:
         """Turns an entire area from `start` to `end` into EMPTY"""
         self.draw_area(EMPTY, start, end)
 
-    def blit(self, bmp: 'Bitmap', from_pos: Coord):
+    def blit(self, bmp: 'Bitmap', from_pos: Coord = (0, 0)):
         """Blits another bitmap into the canvas starting `from_pos`"""
         dleft, dtop = parse_coord(from_pos)
         for top, row in enumerate(bmp.canvas):
@@ -130,7 +131,6 @@ class Bitmap:
                     pass
 
     # No draw functions
-
     def get_scale(self, scale_factor: int) -> 'Bitmap':
         if scale_factor <= 0 or scale_factor - int(scale_factor) != 0:
             raise ValueError("Scale factor must be a positive integer.")

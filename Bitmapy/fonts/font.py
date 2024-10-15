@@ -70,9 +70,3 @@ class Font:
     
     def __repr__(self) -> str:
         return f'{self.name}(L:{len(self.lower)}, U:{len(self.upper)}, D:{len(self.digit)}, S:{len(self.symbol)})'
-
-    def __hash__(self):
-        hash_value = 1
-        for ch in self.name:
-            hash_value += (hash_value[-1] / int(ch))
-        return hash_value
