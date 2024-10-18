@@ -1,8 +1,7 @@
 from .bitmap import Bitmap
-import struct
-from PIL import Image
 
-def from_bitmap(bitmap_path: str) -> Bitmap:
+def from_bitmap(bitmap_path: str):
+    import struct
     with open(bitmap_path, 'rb') as file:
         bmp_data = file.read()
 
@@ -31,10 +30,13 @@ def from_bitmap(bitmap_path: str) -> Bitmap:
     bitmap.canvas = canvas
     return bitmap
 
-def from_image(image_path: str) -> Bitmap:
+def from_image(image_path: str):
+    from .bitmap import Bitmap
+    from PIL import Image
     img = Image.open(image_path).convert('RGBA')
     width, height = img.size
     bitmap = Bitmap(width, height)
+    print(img, bitmap)
     for y in range(height):
         for x in range(width):
             r, g, b, a = img.getpixel((x, y))

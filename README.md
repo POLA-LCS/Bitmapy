@@ -1,7 +1,7 @@
 # Bitmapy
 *The Python's bitmap manager.*
 
-## Today in version 1.7.5 !!!
+## Today in version 1.8.0 !!!
 
 ![Bitmap logo.](./logo.bmp)
 
@@ -19,6 +19,15 @@ image = bmp.Bitmap(1, 1, bmp.RED)
 
 # save(path)
 image.save('red_pixel.bmp')
+```
+
+### Context manager
+```python
+from Bitmapy import bmp
+# Context manager
+with bmp.Bitmap(5, 5, bmp.RED, 'image.bmp') as image:
+    image.draw_area((190, 70, 120), (1, 1), (3, 3))
+# Automatically saves the image when exiting the context
 ```
 
 ### Draw a circle and fill it

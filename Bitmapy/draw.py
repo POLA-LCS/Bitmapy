@@ -1,4 +1,5 @@
-from .bitmap import Bitmap, Color, Coord
+from .bitmap import Bitmap
+from .types import Color, Coord
 
 def circle(bmp: Bitmap, color: Color, position: Coord, radius: int):
     center_x, center_y = position
@@ -28,27 +29,28 @@ def circle(bmp: Bitmap, color: Color, position: Coord, radius: int):
 def bitmapy_logo():
     logo = Bitmap(15, 15, (255, 255, 255))
 
-    circle(logo, (0, 0, 0), (8, 8), 6)
+    from .colors import BLACK
+    circle(logo, BLACK, (8, 8), 6)
 
     logo.fill((255, 255, 0), (8, 8))
 
     logo.draw(
         # Eyebrows
-        ((0, 0, 0), (5, 6)), # Left
-        ((0, 0, 0), (6, 6)),
-        ((0, 0, 0), (7, 6)),
-        ((0, 0, 0), (9, 6)), # Right
-        ((0, 0, 0), (10, 6)),
-        ((0, 0, 0), (11, 6)),
+        (BLACK, (5, 6)), # Left
+        (BLACK, (6, 6)),
+        (BLACK, (7, 6)),
+        (BLACK, (9, 6)), # Right
+        (BLACK, (10, 6)),
+        (BLACK, (11, 6)),
         # Eyes
-        ((0, 0, 0), (6, 8)), # Left
-        ((0, 0, 0), (10, 8)), # Right
+        (BLACK, (6, 8)), # Left
+        (BLACK, (10, 8)), # Right
         # Mouth
-        ((0, 0, 0), (6, 10)),
-        ((0, 0, 0), (10, 10)),
-        ((0, 0, 0), (7, 11)),
-        ((0, 0, 0), (8, 11)),
-        ((0, 0, 0), (9, 11)),
+        (BLACK, (6, 10)),
+        (BLACK, (7, 11)),
+        (BLACK, (8, 11)),
+        (BLACK, (9, 11)),
+        (BLACK, (10, 10)),
     )
     
     return logo
