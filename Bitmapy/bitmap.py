@@ -1,12 +1,12 @@
 """The heart of Bitmapy, inside contains the Bitmap class"""
+from .types import Color, Coord, Pixel, Area
+from .coord import parse_coord
+from .color import parse_color, blend_color
+from .colors import EMPTY
+from struct import pack
 
 class Bitmap:
     "Bitmap representation class"
-    from .types import Color, Coord, Pixel, Area
-    from .coord import parse_coord
-    from .color import parse_color, blend_color
-    from .colors import EMPTY
-    from struct import pack
     def __init__(
             self,
             width: int,
@@ -30,9 +30,9 @@ class Bitmap:
         bitmap_header = b'BM'
         offset = 54  # 14 (file header) + 40 (info header)
         file_size = offset + 4 * self._width * self._height
-        bitmap_header += self.pack('<IHHI', file_size, 0, 0, offset)
+        bitmap_header += pack('<IHHI', file_size, 0, 0, offset)
 
-        header_info = self.pack(
+        header_info = pack(
             '<IIIHHIIIIII', 40,
             self._width, self._height,
             1, 32, 0, 0, 0, 0, 0, 0
@@ -42,8 +42,8 @@ class Bitmap:
         idleft = 0
         for row in reversed(self.canvas):
             for color in row:
-                color = self.parse_color(color)
-                image_data[idleft:idleft + 4] = self.pack('BBBB', color[2], color[1], color[0], color[3])
+                color = parse_color(color)
+                image_data[idleft:idleft + 4] = pack('BBBB', color[2], color[1], color[0], color[3])
                 idleft += 4
 
         with open(path, 'wb') as file:
@@ -66,7 +66,7 @@ class Bitmap:
         """Interprets the arguments as Positions of Areas and calls `erase_pixel` or `erase_area`
         NOTE: Invalid positions or areas raises ValueError with the \"bad\" argument's position"""
         for pos in positions:
-            pos = self.parse_coord(pos)
+            pos = parse_coord(pos)
             if isinstance(pos[0], int):
                 self.erase_pixel(pos)
             else:
@@ -74,14 +74,14 @@ class Bitmap:
 
     def fill(self, color: Color, position: Coord, tolerancy: int = 0):
         """Fills with `color` from `position` with a certain amout of `tolerancy` (0 - 255)"""
-        left, top = self.parse_color(position)
+        left, top = parse_coord(position)
         if not (0 <= left < self._width and 0 <= top < self._height):
             return 0
 
         if (target_color := self.canvas[top][left]) == color:
             return 0
         
-        def is_valid_position(self, pos):
+        def is_valid_position(pos):
             return (dest := self.get_pixel(*pos)) is not None and dest != color
 
         filled = 0
@@ -101,23 +101,23 @@ class Bitmap:
 
     def draw_pixel(self, color: Color, position: Coord):
         """Draws a `color` pixel on the specified `position`"""
-        left, top = self.parse_coord(position)
-        color = self.parse_color(color)
+        left, top = parse_coord(position)
+        color = parse_color(color)
         if 0 <= left < self._width and 0 <= top < self._height:
             if color[-1] != 0:
                 target = self.canvas[top][left]
-                self.canvas[top][left] = self.blend_color(target, color)
+                self.canvas[top][left] = blend_color(target, color)
 
     def erase_pixel(self, position: Coord):
         """Turns the pixel in the `position` into a transparent pixel"""
-        left, top = self.parse_coord(position)
+        left, top = parse_coord(position)
         if 0 <= left < self._width and 0 <= top < self._height:
             self.canvas[top][left] = self.EMPTY
 
     def draw_area(self, color: Color, start: Coord, end: Coord):
         """Draws an area of `color` from `start` to `end`"""
-        start_left, start_top = self.parse_coord(start)
-        end_left, end_top = self.parse_coord(end)
+        start_left, start_top = parse_coord(start)
+        end_left, end_top = parse_coord(end)
         for top in range(min(start_top, end_top), max(start_top, end_top) + 1):
             for left in range(min(start_left, end_left), max(start_left, end_left) + 1):
                 self.draw_pixel(color, (left, top))
@@ -128,12 +128,12 @@ class Bitmap:
 
     def blit(self, bmp: 'Bitmap', from_pos: Coord = (0, 0)):
         """Blits another bitmap into the canvas starting `from_pos`"""
-        dleft, dtop = self.parse_coord(from_pos)
+        dleft, dtop = parse_coord(from_pos)
         for top, row in enumerate(bmp.canvas):
             for left, color in enumerate(row):
                 try:
                     target = self.canvas[dtop + top][dleft + left]
-                    self.canvas[dtop + top][dleft + left] = self.blend_color(target, color)
+                    self.canvas[dtop + top][dleft + left] = blend_color(target, color)
                 except IndexError:
                     pass
 
